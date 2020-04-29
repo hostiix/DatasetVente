@@ -9,7 +9,7 @@ from math import *
 # Exécution du script : Ouvrir terminal, exécuter si Windows: "type file.csv | python mapper.py | python reduce.py"
 # type DateUnique.csv | C:\Users\silva\AppData\Local\Programs\Python\Python37\python.exe ReduceAM.py
 
-file: TextIO = open("FichierMock_modif3.csv", "w")
+file: TextIO = open("FichierMock_modif4.csv", "w")
 file.write(
     '%s;%s;%s;%s;%s;%s;%s;%s;%s\n' % (
         "id_vente", "date_vente", "id_client", "categorie_client","id_magasin", "prix_vente_unitaire", "quantité", "id_produit", "categorie_produit"))
@@ -18,7 +18,7 @@ jours_ferié_fermé = ["1/1", "1/5", "25/12"]
 jours_ferié_ouvert = ["8/5", "15/8", "14/7", "1/11", "11/11"]
 
 #Les catégories des clients / Produits
-categorie = ["High-tech", "Sport", "Bio", "Nourriture", "Mode", "Jardinage", "Multimédia", "Culturel", "Enfant", "Beauté/bijoux"]
+categorie = ["High-tech", "Sport", "Bio", "Nourriture", "Mode", "Jardinage", "Multimédia", "Culturel", "Enfant", "Beauté/bijoux", "Autre"]
 
 # Nombre de produit dans la commande
 nb_product_invoice_random = random.randint(1, 10)
@@ -42,25 +42,29 @@ elif id_client > 30004 and id_client < 36463:
 elif id_client > 36464 and id_client < 51465:
     categorie_client = categorie[3]  # Profil Nourriture
 
-elif id_client > 51466 and id_client < 66467:
+elif id_client > 51466 and id_client < 67467:
     categorie_client = categorie[4]  # Profil Mode
 
-elif id_client > 66468 and id_client < 72927:
+elif id_client > 67468 and id_client < 74927:
     categorie_client = categorie[5]  # Profil Jardinage
 
-elif id_client > 72928 and id_client < 79387:
+elif id_client > 74928 and id_client < 82387:
     categorie_client = categorie[6]  # Profil Multimédia
 
-elif id_client > 79388 and id_client < 85847:
+elif id_client >82388 and id_client < 90847:
     categorie_client = categorie[7]  # Profil Culturel
 
-elif id_client > 85848 and id_client < 92307:
+elif id_client > 90848 and id_client < 97307:
     categorie_client = categorie[8]  # Profil Enfant
 
-elif id_client > 92308 and id_client < 98767:
+elif id_client > 97308 and id_client < 98667:
     categorie_client = categorie[9]  # Profil Beauté/Bijoux
+
+elif id_client > 98668 and id_client < 98767:
+    categorie_client = categorie[10] # Profil Autre
+
 id_magasin = random.randint(1, 250)
-id_produit = random.randint(1, 1000000)
+id_produit = random.randint(1, 100000)
 
 # Partitioner
 for line in sys.stdin:
@@ -135,34 +139,37 @@ for line in sys.stdin:
 
             #Affectation de la catégorie du profil client
             if id_client >= 1 and id_client < 15001:
-                categorie_client = categorie[0] #Profil High-Tech
+                categorie_client = categorie[0]  # Profil High-Tech
 
-            elif id_client > 15002 and id_client < 30003 :
-                categorie_client = categorie[1] #Profil Sport
+            elif id_client > 15002 and id_client < 30003:
+                categorie_client = categorie[1]  # Profil Sport
 
-            elif id_client > 30004 and id_client < 36463 :
-                categorie_client = categorie[2] #Profil Bio
+            elif id_client > 30004 and id_client < 36463:
+                categorie_client = categorie[2]  # Profil Bio
 
-            elif id_client > 36464 and id_client < 51465 :
-                categorie_client = categorie[3] #Profil Nourriture
+            elif id_client > 36464 and id_client < 51465:
+                categorie_client = categorie[3]  # Profil Nourriture
 
-            elif id_client > 51466 and id_client < 66467 :
-                categorie_client = categorie[4] #Profil Mode
+            elif id_client > 51466 and id_client < 67467:
+                categorie_client = categorie[4]  # Profil Mode
 
-            elif id_client > 66468 and id_client < 72927 :
-                categorie_client = categorie[5] #Profil Jardinage
+            elif id_client > 67468 and id_client < 74927:
+                categorie_client = categorie[5]  # Profil Jardinage
 
-            elif id_client > 72928 and id_client < 79387 :
-                categorie_client = categorie[6] #Profil Multimédia
+            elif id_client > 74928 and id_client < 82387:
+                categorie_client = categorie[6]  # Profil Multimédia
 
-            elif id_client > 79388 and id_client < 85847 :
-                categorie_client = categorie[7] #Profil Culturel
+            elif id_client > 82388 and id_client < 90847:
+                categorie_client = categorie[7]  # Profil Culturel
 
-            elif id_client > 85848 and id_client < 92307 :
-                categorie_client = categorie[8] #Profil Enfant
+            elif id_client > 90848 and id_client < 97307:
+                categorie_client = categorie[8]  # Profil Enfant
 
-            elif id_client > 92308 and id_client < 98767 :
-                categorie_client = categorie[9] #Profil Beauté/Bijoux
+            elif id_client > 97308 and id_client < 98667:
+                categorie_client = categorie[9]  # Profil Beauté/Bijoux
+
+            elif id_client > 98668 and id_client < 98767:
+                categorie_client = categorie[10]  # Profil Autre
 
             id_magasin = random.randint(1, 250)
             nb_product_invoice = 1
@@ -173,112 +180,133 @@ for line in sys.stdin:
 
         if proba_produit_achete_profil < 76: #Dans 75% des cas le client achete des produits similaire à son profil
             if categorie_client == categorie[0]: # Profil High-Tech
-                id_produit = random.randint(1,150000)
+                id_produit = random.randint(1,15000)
 
             elif categorie_client == categorie[1]: # Profil Sport
-                id_produit = random.randint(150001, 300000)
+                id_produit = random.randint(15001, 30000)
 
             elif categorie_client == categorie[2]: # Profil Bio
-                id_produit = random.randint(300001, 366668)
+                id_produit = random.randint(30001, 36668)
 
             elif categorie_client == categorie[3]: # Profil Nourriture
-                id_produit = random.randint(366669, 516669)
+                id_produit = random.randint(36669, 51669)
 
             elif categorie_client == categorie[4]: # Profil Mode
-                id_produit = random.randint(516670, 666670)
+                id_produit = random.randint(51670, 66670)
 
             elif categorie_client == categorie[5]: # Profil Jardinage
-                id_produit = random.randint(666671, 733338)
+                id_produit = random.randint(66671, 73338)
 
             elif categorie_client == categorie[6]: # Profil Multimédia
-                id_produit = random.randint(733339, 800006)
+                id_produit = random.randint(73339, 80006)
 
             elif categorie_client == categorie[7]: # Profil Culturel
-                id_produit = random.randint(800007, 866674)
+                id_produit = random.randint(80007, 86674)
 
             elif categorie_client == categorie[8]: # Profil Enfant
-                id_produit = random.randint(866675, 933342)
+                id_produit = random.randint(86675, 98942)
 
             elif categorie_client == categorie[9]: # Profil Beauté/Bijoux
-                id_produit = random.randint(933343, 1000000)
+                id_produit = random.randint(98843, 99900)
+
+            elif categorie_client == categorie[10]: # Profil Autre
+                id_produit = random.randint(99901,100000)
 
         else: #Dans les autres cas il achete des produits différents de son profils
             if categorie_client == categorie[0]: # Profil High-Tech
-                id_produit = random.randint(150001,1000000)
+                id_produit = random.randint(15001,100000)
 
             elif categorie_client == categorie[1]: # Profil Sport
                 if proba_borne_random == 1:
-                    id_produit = random.randint(1, 150000)
+                    id_produit = random.randint(1, 15000)
                 else:
-                    id_produit = random.randint(300001,1000000)
+                    id_produit = random.randint(30001,100000)
 
             elif categorie_client == categorie[2]: # Profil Bio
                 if proba_borne_random == 1:
-                    id_produit = random.randint(1, 300000)
+                    id_produit = random.randint(1, 30000)
                 else:
-                    id_produit = random.randint(366669, 1000000)
+                    id_produit = random.randint(36669, 100000)
 
             elif categorie_client == categorie[3]: # Profil Nourriture
                 if proba_borne_random == 1:
-                    id_produit = random.randint(1, 366668)
+                    id_produit = random.randint(1, 36668)
                 else:
-                    id_produit = random.randint(516670, 1000000)
+                    id_produit = random.randint(51670, 100000)
 
             elif categorie_client == categorie[4]: # Profil Mode
                 if proba_borne_random == 1:
-                    id_produit = random.randint(1, 516669)
+                    id_produit = random.randint(1, 51669)
                 else:
-                    id_produit = random.randint(666671, 1000000)
+                    id_produit = random.randint(66671, 100000)
 
             elif categorie_client == categorie[5]: # Profil Jardinage
                 if proba_borne_random == 1:
-                    id_produit = random.randint(1, 666670)
+                    id_produit = random.randint(1, 66670)
                 else:
-                    id_produit = random.randint(733339, 1000000)
+                    id_produit = random.randint(73339, 100000)
 
             elif categorie_client == categorie[6]: # Profil Multimédia
                 if proba_borne_random == 1:
-                    id_produit = random.randint(1, 733338)
+                    id_produit = random.randint(1, 73338)
                 else:
-                    id_produit = random.randint(800007, 1000000)
+                    id_produit = random.randint(80007, 100000)
 
             elif categorie_client == categorie[7]: # Profil Culturel
                 if proba_borne_random == 1:
-                    id_produit = random.randint(1, 800006)
+                    id_produit = random.randint(1, 80006)
                 else:
-                    id_produit = random.randint(866675, 1000000)
+                    id_produit = random.randint(86675, 100000)
 
             elif categorie_client == categorie[8]: # Profil Enfant
                 if proba_borne_random == 1:
-                    id_produit = random.randint(1, 866674)
+                    id_produit = random.randint(1, 86674)
                 else:
-                    id_produit = random.randint(933343, 1000000)
+                    id_produit = random.randint(98843, 100000)
 
             elif categorie_client == categorie[9]: # Profil Beauté/Bijoux
-                id_produit = random.randint(1, 933342)
+                if proba_borne_random == 1:
+                    id_produit = random.randint(1, 98942)
+                else:
+                    id_produit = random.randint(99901, 100000)
+
+            elif categorie_client == categorie[10]: # Profil Autre
+                id_produit = random.randint(1,99900)
 
 
         #Affectation de la catégorie aux produits
-        if id_produit >= 1 and id_produit < 150000:
+        if id_produit >= 1 and id_produit < 15000:
             categorie_produit = categorie[0]  # Profil High-Tech
-        elif id_produit > 150001 and id_produit < 300000:
+
+        elif id_produit > 15001 and id_produit < 30000:
             categorie_produit = categorie[1]  # Profil Sport
-        elif id_produit > 300001 and id_produit < 366668:
+
+        elif id_produit > 30001 and id_produit < 36668:
             categorie_produit = categorie[2]  # Profil Bio
-        elif id_produit > 366669 and id_produit < 516669:
+
+        elif id_produit > 36669 and id_produit < 51669:
             categorie_produit = categorie[3]  # Profil Nourriture
-        elif id_produit > 516670 and id_produit < 666670:
+
+        elif id_produit > 51670 and id_produit < 66670:
             categorie_produit = categorie[4]  # Profil Mode
-        elif id_produit > 666671 and id_produit < 733338:
+
+        elif id_produit > 66671 and id_produit < 73338:
             categorie_produit = categorie[5]  # Profil Jardinage
-        elif id_produit > 7733339 and id_produit < 800006:
+
+        elif id_produit > 73339 and id_produit < 80006:
             categorie_produit = categorie[6]  # Profil Multimédia
-        elif id_produit > 800007 and id_produit < 866674:
+
+        elif id_produit > 80007 and id_produit < 86674:
             categorie_produit = categorie[7]  # Profil Culturel
-        elif id_produit > 866675 and id_produit < 933342:
+
+        elif id_produit > 86675 and id_produit < 98942:
             categorie_produit = categorie[8]  # Profil Enfant
-        elif id_produit > 933343 and id_produit < 1000010:
+
+        elif id_produit > 98943 and id_produit < 99900:
             categorie_produit = categorie[9]  # Profil Beauté/Bijoux
+
+        elif id_produit > 99901 and id_produit < 100000 :
+            categorie_produit = categorie[10] # Profil Autre
 
         prix = round(random.uniform(0.7, 50.00), 2)
         quantite = random.randint(1, 10)
